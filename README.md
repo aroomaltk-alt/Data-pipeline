@@ -7,11 +7,12 @@ This project builds a real-time data pipeline that collects live weather data fr
 OpenWeather API → Python Producer → Apache Kafka → PySpark Streaming → PostgreSQL
 
 ## Technologies Used
+- OpenWeather API
 - Python
 - Apache Kafka
 - PySpark
 - PostgreSQL
-- OpenWeather API
+
 
 ## Project Structure
 producer → Kafka Producer (Weather API data)
@@ -33,3 +34,27 @@ spark-submit spark_streaming_consumer.py
 
 ### PostgreSQL
 Data will be stored in PostgreSQL table.
+
+
+
+## AWS Architecture
+
+This project is deployed on AWS cloud using the following architecture:
+
+OpenWeather API → AWS Lambda → Amazon EC2 (Apache Kafka) → AWS Glue (PySpark) → Amazon RDS (PostgreSQL)
+
+### Service Explanation
+
+- **AWS Lambda**: Collects weather data from OpenWeather API and sends data to Kafka.
+- **Amazon EC2**: Hosts Apache Kafka broker for real-time data streaming.
+- **AWS Glue (PySpark)**: Consumes data from Kafka, processes and transforms the data.
+- **Amazon RDS (PostgreSQL)**: Stores the processed weather data.
+- **CloudWatch**: Used for logging and monitoring.
+
+### Data Flow
+
+1. AWS Lambda fetches real-time weather data from OpenWeather API.
+2. Lambda sends the data to Kafka running on EC2.
+3. AWS Glue PySpark job reads data from Kafka topic.
+4. PySpark processes and transforms the data.
+5. Processed data is stored in Amazon RDS (PostgreSQL).
